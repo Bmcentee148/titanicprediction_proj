@@ -1,0 +1,11 @@
+README.md   docs        tests       titanic
+
+./docs:
+links.txt   projstruct.txt
+
+./tests:
+__init__.py     titanic_tests.py
+__init__.pyc        titanic_tests.pyc
+
+./titanic:
+__init__.py     __init__.pyc        titanicpredictions.py
