@@ -45,6 +45,7 @@ def get_training_data(file_name) :
         data = []
         for row in csv_reader :        
             data.append(row)
+        infile.close()
         return np.array(data)
 
 def get_column_data(col_name) :
@@ -52,16 +53,54 @@ def get_column_data(col_name) :
 
 data =  get_training_data(TRAINING_FILENAME)
 
-passengers_total = np.size(get_column_data('survived').astype(np.float))
-print "Total number of passengers: {0}".format(passengers_total)
-survived_total = np.sum(get_column_data('survived').astype(np.float))
-print "Total number of survivors: {0}".format(survived_total)
-proportion_survivors = survived_total / passengers_total
-print "Proportion of passengers who survived: {0:.2f}%".format(
-    proportion_survivors)
+#----------------------------- Main Script -------------------------------------
+def main() :
+    
+    # Calculate overall proportion of surviving passengers
+    passengers_total = np.size(get_column_data('survived').astype(np.float))
+    print "Total number of passengers: {0}".format(passengers_total)
+    survived_total = np.sum(get_column_data('survived').astype(np.float))
+    print "Total number of survivors: {0}".format(survived_total)
+    proportion_survivors = survived_total / passengers_total
+    print "Proportion of passengers who survived: {0:.2f}%".format(
+        proportion_survivors)
 
-male_only_stats = data[:,header_idx['sex']] == "male"
-female_only_stats =  data[:,header_idx['sex']] == "female"
+    # Calculate proportion of survivors for females only
+    female_only_stats =  get_column_data('sex') == "female"
+    women_data = data[female_only_stats,header_idx['survived']].astype(np.float)
+    women_survivors = np.sum(women_data)
+    women_total = np.size(women_data)
+    prop_women_survivors = women_survivors / women_total
+    print "Proportion of women that survived: {0:.2f}%".format(
+        prop_women_survivors)
+    
+    # Calculate proportion of survivors for men only
+    male_only_stats = get_column_data('sex') == "male"
+    men_data = data[male_only_stats,header_idx['survived']].astype(np.float)
+    men_survivors = np.sum(men_data)
+    men_total = np.size(men_data)
+    prop_men_survivors = men_survivors / men_total
+    print "Proportion of men that survived: {0:.2f}%".format (
+        prop_men_survivors)
 
+    # Open file that contains test data and wrap in csv reader
+    test_data_file = open(os.path.join(data_dir_path(), 'test.csv'), 'rb')
+    test_data_reader = csv.reader(test_data_file)
+    header = test_data_reader.next()
 
+    # Create a new file where we will make out predictions
+    prediction_file = open(os.path.join(data_dir_path(), 'pyresults.csv'), 'wb')
+    prediction_data_writer = csv.writer(prediction_file)
 
+    # Read in test file row by row and make prediction based on gender
+    prediction_data_writer.writerow(['PassengerId', 'Survived'])
+    for row in test_data_reader :
+        if row[3] == 'female' :
+            prediction_data_writer.writerow([row[0], 1])
+        elif row[3] == 'male' :
+            prediction_data_writer.writerow([row[0], 0])
+    test_data_file.close()
+    prediction_file.close()
+
+if __name__ == "__main__" :
+    main()
