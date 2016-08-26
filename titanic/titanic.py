@@ -25,7 +25,7 @@ header_idx = {
 def top_level_path() :
     path_with_dir = os.path.dirname(os.path.realpath(__file__))
     top_path, discarded_dir = os.path.split(path_with_dir)
-    return "/" + top_path
+    return top_path
 
 def data_dir_path() :
     return os.path.join(top_level_path(), 'data')

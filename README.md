@@ -1,5 +1,6 @@
 # titanicprediction_proj
-A solution for the infamous "Titanic" machine learning problem from Kaggle competitions.
+A solution for the infamous "Titanic" machine learning problem from Kaggle 
+competitions.
 
 ### Goal of Project
 Given a set of passenger data from people aboard the Titanic, predict whether
@@ -33,3 +34,6 @@ only 19% of the men in our data survive so this is a good place to start. So
 what we did was create a new column in the *test.csv* file named *Survived*.
 We then created a function that would place a 1 in each passengers cell who
 was a female and a 0 in the cell if they were a male.
+
+#### Excel Method (Advanced)
+TODO
