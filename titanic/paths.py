@@ -2,8 +2,7 @@
 
 Methods:
     top_level_path() - returns the top level path of the project folder
-    data_dir_path() - returns path of directory where data is stored
-    images_dir_path() - returns path of directory where images are stored
+    get_path_to(resource) - returns the full path to given project resource
 """
 
 #----------------------------- Import Statements -------------------------------

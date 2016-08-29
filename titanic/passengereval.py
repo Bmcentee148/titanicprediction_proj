@@ -10,19 +10,18 @@ from paths import top_level_path
 def main() :
     #Open csv file and import the data it contains
     data = []
-    header = []
     try :
-        training_file = open (
-            os.path.join(top_level_path(), 'data', 'train.csv'), 'rb')
+        data_path = os.path.join(top_level_path(), 'data', 'train.csv')
+        
+        with open(data_path) as training_file :
+            train_reader = csv.reader(training_file)
+            header = train_reader.next()
+            for row in train_reader :
+                data.append(row)
+                
     except IOError as e :
         print e
         sys.exit(1)
-    else :
-        train_reader = csv.reader(training_file)
-        header = train_reader.next()
-        for row in train_reader :
-            data.append(row)
-        training_file.close()
 
     data = np.array(data) # convert data to numpy array type
     
