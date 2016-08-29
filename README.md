@@ -36,4 +36,20 @@ We then created a function that would place a 1 in each passengers cell who
 was a female and a 0 in the cell if they were a male.
 
 #### Excel Method (Advanced)
-TODO
+Our improved analysis using Excel takes gender, passenger class, and ticket 
+price in order to attempt to make better predictions. First we created a new
+column in our data with the heading *Price Group*. We didived the passengers 
+into 4 groups: less than 10 dollars, between 10 and 20 dollars, between 20
+and 30 dollars, and 30 dollars and over. From these groups, we looked at the
+percentage that survived in each and if it was not greater than 50% we simply
+said they did not survive. Any category with over a 50% statistic was said
+to survive. Note that while this model was more complicated than our first, we 
+actually got less accurate results.
+
+#### Python Script Method (Very Simplistic)
+Here we performed the same analysis as in our very simplistic Excel method,
+but wrote a script that would analyze the data for us. In order to accomplish
+this we used the *csv* module in the standard python library to read in our
+training data. We then used the *numpy* package and used the array type to aid
+in our analysis. As expected, we received the same results as our first gender
+based model using Excel.
