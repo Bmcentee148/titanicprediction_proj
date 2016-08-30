@@ -44,6 +44,9 @@ def main() :
     for class_idx in xrange(num_classes) :
         for fare_idx in xrange(num_price_brackets) :
 
+            # Using selector masks for each category, grab the survivor column
+            # for the passengers that are in that category so we can calculate
+            # the proportion who survived
             women_only_stats = data[
                 (data[:,4] == 'female') &
                 (data[:,2].astype(np.float) == class_idx + 1 ) &
@@ -60,14 +63,27 @@ def main() :
                 , 1
             ]
 
-            #update survival table for this particular category
+            # Update survival table for this particular category. This calcs
+            # the proportion of survivors for the category and stores it in 
+            # the survivor table
             survival_table[0,class_idx,fare_idx] = np.mean(
                 women_only_stats.astype(np.float))
             survival_table[1,class_idx,fare_idx] = np.mean(
                 men_only_stats.astype(np.float))
 
+    # Division by 0 results in value of nan, and is present in our table.
+    # we can get rid of these by checking where the table is not equal to the
+    # table and set these value to 0
     survival_table[survival_table != survival_table] = 0 # set nan vals to 0
     print survival_table
 
+
+    # Use the survival table to determine which categories will survive and
+    # which will not. We decide that if the categories survival rate is less
+    # than .5 all members of that category die else they survive
+    survival_table[survival_table < .5] = 0
+    survival_table[survival_table >= .5] = 1
+
+    print survival_table
 if __name__ == "__main__" :
     main()
