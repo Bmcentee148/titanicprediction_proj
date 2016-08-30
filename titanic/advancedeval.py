@@ -27,7 +27,7 @@ def main() :
         print e
         sys.exit(1)
 
-    # Now we add a cieling to the ticket prices for equal size bins
+    # Add a cieling to the ticket prices for equal size bins
     fare_cieling = 40
     fare_mask = data[:,10].astype(np.float) >= fare_cieling
     data[fare_mask, 10] = fare_cieling - 1.0
